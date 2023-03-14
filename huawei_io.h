@@ -9,13 +9,24 @@
 
 #include <iostream>
 
-class HuaweiIO {
-public:
-    static InputFrame* genFrame();
+namespace HuaweiIO {
+    /**
+     * 这个方法用于将读取的帧转为 InputFrame 类并返回
+     * @return 封装后的一帧
+     */
+    InputFrame& genFrame();
 
-    static void sendCommand(const OutputFrame& frame);
+    /**
+     * 发送
+     * @param frame
+     */
+    void sendCommand(const OutputFrame& frame);
 
-    static bool initMap();
+    /**
+     * 初始化地图的方法
+     * @return 初始化完成，返回 true
+     */
+    bool initMap();
 };
 
 
