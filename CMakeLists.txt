@@ -11,4 +11,4 @@ add_executable(
         data_form.hpp
         huawei_io.h
         huawei_io.cpp
-        planning.cpp planning.h)
+        Planning.cpp Planning.h Navigation.cpp Navigation.h)
