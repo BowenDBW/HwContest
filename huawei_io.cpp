@@ -10,6 +10,9 @@ InputFrame& HuaweiIO::genFrame() {
     double float_receiver;
     int int_receiver;
     auto *frame = new InputFrame();
+    frame->workshops = new std::vector<Workshop>();
+    frame->robots = new std::vector<Robot>();
+
     std::cin >> int_receiver;
     frame->timestamp = int_receiver;
 
@@ -90,7 +93,7 @@ InputFrame& HuaweiIO::genFrame() {
 }
 
 void HuaweiIO::sendCommand(const OutputFrame& frame) {
-    std::cout << Map::getLatestTimeStamp() << std::endl;
+    std::cout << GameMap::getLatestTimeStamp() << std::endl;
     for(auto &pair : *frame.forward) {
         std::cout << "forward " << pair.first << " " << pair.second << std::endl;
     }
@@ -106,6 +109,7 @@ void HuaweiIO::sendCommand(const OutputFrame& frame) {
     for(int serial : *frame.destroy) {
         std::cout << "destroy " << serial << std::endl;
     }
+    std::cout << "OK" << std::endl;
 }
 
 bool HuaweiIO::initMap() {

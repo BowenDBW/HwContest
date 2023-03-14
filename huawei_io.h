@@ -6,6 +6,7 @@
 #define HUAWEICONTEST_HUAWEI_IO_H
 
 #include "data_form.hpp"
+#include "game_map.h"
 
 #include <iostream>
 

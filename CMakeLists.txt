@@ -4,11 +4,21 @@ project(HuaweiContest)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(
-        HuaweiContest
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/home/bowen/LinuxRelease")
 
+add_executable( HuaweiContest
         main.cpp
         data_form.hpp
         huawei_io.h
         huawei_io.cpp
-        Planning.cpp Planning.h Navigation.cpp Navigation.h)
+        Planning.cpp
+        Planning.h
+        Navigation.cpp
+        Navigation.h
+        game_map.cpp
+        game_map.h
+        )
+
+TARGET_LINK_LIBRARIES( HuaweiContest
+        pthread
+        )

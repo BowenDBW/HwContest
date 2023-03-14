@@ -110,50 +110,28 @@ struct Robot {
 
 struct InputFrame {
     // 帧序号
-    int timestamp;
+    int timestamp{};
     // 金钱数
-    int budget;
+    int budget{};
     // 工作台数量
-    int workshop_count;
+    int workshop_count{};
     // 工作台属性
-    std::vector<Workshop> *workshops;
+    std::vector<Workshop> *workshops = new std::vector<Workshop>();
     // 机器人属性
-    std::vector<Robot> *robots;
+    std::vector<Robot> *robots = new std::vector<Robot>;
 };
 
 struct OutputFrame {
     // 设置前进速度
-    std::map<int, double> *forward;
+    std::map<int, double> *forward = new std::map<int, double>();
     // 设置旋转速度
-    std::map<int, double> *rotate;
+    std::map<int, double> *rotate = new std::map<int, double>();
     // 该帧购买操作机器人ID
-    std::vector<int> *buy;
+    std::vector<int> *buy = new std::vector<int>();
     // 该帧销售操作机器人ID
-    std::vector<int> *sell;
+    std::vector<int> *sell = new std::vector<int>();
     // 该帧销毁操作机器人ID
-    std::vector<int> *destroy;
-};
-
-class Map {
-private:
-    // 当前帧
-    static int latest_timestamp;
-    // 地图中的工作台信息
-    static std::vector<InputFrame> *map_frames;
-
-public:
-    static int getLatestTimeStamp(){
-        return latest_timestamp;
-    }
-
-    static std::vector<InputFrame>& getMapFrames(){
-        return *map_frames;
-    }
-
-    static void updateFrame(const int new_timestamp, const InputFrame& map_frame){
-        latest_timestamp = new_timestamp;
-        map_frames->push_back(map_frame);
-    }
+    std::vector<int> *destroy = new std::vector<int>();
 };
 
 #endif //HUAWEICONTEST_DATA_FORM_HPP
