@@ -9,9 +9,14 @@
 #include <map>
 #include <cmath>
 
-struct Point2D{
+struct Point2D {
     double x;
     double y;
+
+    Point2D(double x, double y){
+        this->x = x;
+        this->y = y;
+    }
 };
 
 struct WorkshopProperties{
@@ -57,11 +62,13 @@ struct Workshop {
     // 工作台类型
     int type;
     // 工作台坐标
-    Point2D position;
+    Point2D *position;
     // 剩余生产时间
     // -1 表示没有生产
     // 0 表示生产因输出格满而阻塞
     int waiting_time;
+    // 原材料格状态
+    int material;
     // 产品格状态
     bool hasProduct;
 };
@@ -94,32 +101,11 @@ struct Robot {
     // 角速度
     double angular_velocity;
     // 线速度
-    Point2D linear_velocity;
+    Point2D* linear_velocity;
     // 朝向
     double toward_direction;
     // 坐标
-    Point2D position;
-};
-
-struct MapFrame{
-    // 帧序号
-    int timestamp;
-    // 地图中的工作台信息
-    std::vector<Workshop> workshops;
-    // 地图中的机器人信息
-    std::vector<Robot> robots;
-};
-
-struct Map {
-    // 当前帧
-    static int latest_timestamp;
-    // 地图中的工作台信息
-    static std::vector<MapFrame> map_frames;
-
-    static void updateFrame(const int new_timestamp, const MapFrame& map_frame){
-        latest_timestamp = new_timestamp;
-        map_frames.push_back(map_frame);
-    }
+    Point2D* position;
 };
 
 struct InputFrame {
@@ -130,9 +116,9 @@ struct InputFrame {
     // 工作台数量
     int workshop_count;
     // 工作台属性
-    std::vector<Workshop> workshops;
+    std::vector<Workshop> *workshops;
     // 机器人属性
-    std::vector<Robot> robots;
+    std::vector<Robot> *robots;
 };
 
 struct OutputFrame {
@@ -141,12 +127,33 @@ struct OutputFrame {
     // 设置旋转速度
     std::map<int, double> rotate;
     // 该帧购买操作机器人ID
-    std::vector<int> buy;
+    std::vector<int> *buy;
     // 该帧销售操作机器人ID
-    std::vector<int> sell;
+    std::vector<int> *sell;
     // 该帧销毁操作机器人ID
-    std::vector<int> destroy;
+    std::vector<int> *destroy;
 };
 
+class Map {
+private:
+    // 当前帧
+    static int latest_timestamp;
+    // 地图中的工作台信息
+    static std::vector<InputFrame> *map_frames;
+
+public:
+    static int getLatestTimeStamp(){
+        return latest_timestamp;
+    }
+
+    static std::vector<InputFrame>& getMapFrames(){
+        return *map_frames;
+    }
+
+    static void updateFrame(const int new_timestamp, const InputFrame& map_frame){
+        latest_timestamp = new_timestamp;
+        map_frames->push_back(map_frame);
+    }
+};
 
 #endif //HUAWEICONTEST_DATA_FORM_HPP

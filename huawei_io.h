@@ -6,13 +6,16 @@
 #define HUAWEICONTEST_HUAWEI_IO_H
 
 #include "data_form.hpp"
+
 #include <iostream>
 
 class HuaweiIO {
 public:
-    InputFrame genFrame();
+    static InputFrame* genFrame();
 
-    void sendCommand(const OutputFrame& frame);
+    static void sendCommand(const OutputFrame& frame);
+
+    static bool initMap();
 };
 
 
