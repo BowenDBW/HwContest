@@ -7,13 +7,51 @@
 
 #include <vector>
 #include <map>
-
+#include <cmath>
 
 struct Point2D{
     double x;
     double y;
 };
 
+struct WorkshopProperties{
+    const int PRE_STEP[7][3] = {
+            0,0,0,
+            0,0,0,
+            0,0,0,
+            1,2,0,
+            1,3,0,
+            2,3,0,
+            4,5,6,
+    };
+    const double MONEY_COST[7] = {
+            3000,
+            4400,
+            5800,
+            15400,
+            17200,
+            19200,
+            76000
+    };
+    const double MONEY_EARN[7] = {
+            6000,
+            7600,
+            9200,
+            22500,
+            25000,
+            27500,
+            105000
+    };
+    const int TIME_COST[7] = {
+            50,
+            50,
+            50,
+            500,
+            500,
+            500,
+            1000,
+    };
+};
 
 struct Workshop {
     // 工作台类型
@@ -29,6 +67,16 @@ struct Workshop {
 };
 
 struct Robot {
+    // 最大前进速度
+    static constexpr double MAX_FORWARD = 6;
+    // 最大倒退速度
+    static constexpr double MAX_BACKWARD = -2;
+    // 最大旋转速度
+    static constexpr double MAX_ROTATE_SPEED = M_PI;
+    // 最大牵牵引力
+    static constexpr double MAX_TRACTION = 250;
+    // 最大力矩
+    static constexpr double MAX_TORQUE = 50;
     // 机器人 id
     int id;
     // 当前处于的工作台编号，
@@ -53,18 +101,30 @@ struct Robot {
     Point2D position;
 };
 
+struct MapFrame{
+    // 帧序号
+    int timestamp;
+    // 地图中的工作台信息
+    std::vector<Workshop> workshops;
+    // 地图中的机器人信息
+    std::vector<Robot> robots;
+};
+
 struct Map {
     // 当前帧
-    int time_stamp;
+    static int latest_timestamp;
     // 地图中的工作台信息
-    static std::vector<Workshop> workshops;
-    // 地图中的机器人信息
-    static std::vector<Robot> robots;
+    static std::vector<MapFrame> map_frames;
+
+    static void updateFrame(const int new_timestamp, const MapFrame& map_frame){
+        latest_timestamp = new_timestamp;
+        map_frames.push_back(map_frame);
+    }
 };
 
 struct InputFrame {
     // 帧序号
-    int serial;
+    int timestamp;
     // 金钱数
     int budget;
     // 工作台数量
