@@ -9,7 +9,6 @@ add_executable(
 
         main.cpp
         data_form.hpp
-        const_params.hpp
         huawei_io.h
         huawei_io.cpp
 )

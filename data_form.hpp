@@ -14,6 +14,7 @@ struct Point2D{
     double y;
 };
 
+
 struct Workshop {
     // 工作台类型
     int type;

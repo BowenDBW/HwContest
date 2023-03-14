@@ -1,8 +1,0 @@
-//
-// Created by bowen on 23-3-13.
-//
-
-#ifndef HUAWEICONTEST_CONST_PARAMS_HPP
-#define HUAWEICONTEST_CONST_PARAMS_HPP
-
-#endif //HUAWEICONTEST_CONST_PARAMS_HPP
