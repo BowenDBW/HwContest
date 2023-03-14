@@ -123,9 +123,9 @@ struct InputFrame {
 
 struct OutputFrame {
     // 设置前进速度
-    std::map<int, double> forward;
+    std::map<int, double> *forward;
     // 设置旋转速度
-    std::map<int, double> rotate;
+    std::map<int, double> *rotate;
     // 该帧购买操作机器人ID
     std::vector<int> *buy;
     // 该帧销售操作机器人ID

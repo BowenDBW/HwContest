@@ -91,11 +91,21 @@ InputFrame& HuaweiIO::genFrame() {
 
 void HuaweiIO::sendCommand(const OutputFrame& frame) {
     std::cout << Map::getLatestTimeStamp() << std::endl;
-    std::map<int, double>::iterator iter;
-    for(auto &pair : frame.forward) {
-        std::cout << "forward " << iter->first << " " << iter->second << std::endl;
+    for(auto &pair : *frame.forward) {
+        std::cout << "forward " << pair.first << " " << pair.second << std::endl;
     }
-    // TODO: 写完剩下的指令
+    for(auto &pair : *frame.rotate) {
+        std::cout << "rotate " << pair.first << " " << pair.second << std::endl;
+    }
+    for(int serial : *frame.buy) {
+        std::cout << "buy " << serial << std::endl;
+    }
+    for(int serial : *frame.sell) {
+        std::cout << "sell " << serial << std::endl;
+    }
+    for(int serial : *frame.destroy) {
+        std::cout << "destroy " << serial << std::endl;
+    }
 }
 
 bool HuaweiIO::initMap() {

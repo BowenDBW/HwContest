@@ -24,7 +24,7 @@ int main(){
         if(stamp_record == Map::getLatestTimeStamp()){
             continue;
         }
-        OutputFrame outputFrame;
+        OutputFrame outputFrame{};
 
         //TODO: 主进程，用于添加算法
 
