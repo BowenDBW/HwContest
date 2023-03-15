@@ -59,18 +59,19 @@ struct WorkshopProperties{
 };
 
 struct Workshop {
+    int id{};
     // 工作台类型
-    int type;
+    int type{};
     // 工作台坐标
-    Point2D *position;
+    Point2D *position{};
     // 剩余生产时间
     // -1 表示没有生产
     // 0 表示生产因输出格满而阻塞
-    int waiting_time;
+    int waiting_time{};
     // 原材料格状态
-    int material;
+    std::vector<int> *material = new std::vector<int>();
     // 产品格状态
-    bool hasProduct;
+    bool hasProduct{};
 };
 
 struct Robot {
@@ -118,7 +119,7 @@ struct InputFrame {
     // 工作台属性
     std::vector<Workshop> *workshops = new std::vector<Workshop>();
     // 机器人属性
-    std::vector<Robot> *robots = new std::vector<Robot>;
+    std::vector<Robot> *robots = new std::vector<Robot>();
 };
 
 struct OutputFrame {

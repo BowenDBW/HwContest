@@ -31,6 +31,8 @@ InputFrame& HuaweiIO::genFrame() {
         // 读入机器信息
         for (int i = 0; i < frame->workshop_count; ++i) {
             auto* workshop = new Workshop();
+            // 工作台 id
+            workshop->id = i;
             // 工作台类型
             std::cin >> int_receiver;
             workshop->type = int_receiver;
@@ -43,8 +45,17 @@ InputFrame& HuaweiIO::genFrame() {
             std::cin >> int_receiver;
             workshop->waiting_time = int_receiver;
             // 原材料状态
-            std::cin >> int_receiver;
-            workshop->material = int_receiver;
+            std::cin >> string_receiver;
+            int temp = stoi(string_receiver, nullptr, 2);
+            int divider = 10;
+            while(true){
+                int serial = temp % divider;
+                if(serial == temp){
+                    break;
+                } else {
+                    workshop->material->push_back(serial);
+                }
+            }
             // 产品格状态
             std::cin >> int_receiver;
             workshop->hasProduct = int_receiver;

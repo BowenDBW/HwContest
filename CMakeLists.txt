@@ -17,7 +17,7 @@ add_executable( HuaweiContest
         Navigation.h
         game_map.cpp
         game_map.h
-        )
+        router.cpp router.h)
 
 TARGET_LINK_LIBRARIES( HuaweiContest
         pthread

@@ -6,6 +6,7 @@
 #define HUAWEICONTEST_GAME_MAP_H
 
 #include "data_form.hpp"
+#include <iostream>
 #include <vector>
 
 class GameMap {
@@ -19,6 +20,10 @@ public:
     static int getLatestTimeStamp();
 
     static std::vector<InputFrame>& getMapFrames();
+
+    static InputFrame getFrameBySerial(const int serial);
+
+    static InputFrame getFrameBySerial(const int serial, const int search_start_frame);
 
     static void updateFrame(int new_timestamp, const InputFrame& map_frame);
 };

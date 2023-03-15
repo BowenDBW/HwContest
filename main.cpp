@@ -5,7 +5,6 @@
 #include "huawei_io.h"
 #include "game_map.h"
 #include <thread>
-#include <unistd.h>
 
 bool reach_end = false;
 int stamp_record = -2;
@@ -46,11 +45,12 @@ void startGame(){
 
     // 算法输出主进程
     while(!reach_end) {
-        sleep(1);
-        // 时间戳一致时不处理
+        // 时间戳一致时不处理，时间戳为0时不处理
         if (stamp_record == GameMap::getLatestTimeStamp() || GameMap::getLatestTimeStamp() == 0) {
             continue;
         }
+        stamp_record = GameMap::getLatestTimeStamp();
+
         OutputFrame outputFrame;
         outputFrame.forward->insert(std::pair<int, double>(1,2.0));
         //TODO: 主进程，用于添加算法
