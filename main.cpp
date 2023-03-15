@@ -4,16 +4,21 @@
 
 #include "huawei_io.h"
 #include "game_map.h"
-#include "robot_behavior.h"
+#include "navigation.h"
+#include "planning_simple.h"
+
 #include <thread>
 
 bool reach_end = false;
 int stamp_record = -2;
 
-[[noreturn]] void inputListener();
+// 这个方法用于启动所有子线程
+void initThreads();
+// 这个方法用于开启主循环
 void startGame();
 
 int main(){
+    initThreads();
     startGame();
 }
 
@@ -35,9 +40,18 @@ int main(){
 }
 
 /**
- * 程序主循环
+ * 决策树模型
  */
-void startGame(){
+ void planningListener(){
+     // 工厂模式：这个地方决定你用什么决策模型
+     Planning *planning = new SimplePlanning();
+     planning->planningLoop();
+ }
+
+/**
+ * 初始化函数
+ */
+void initThreads(){
     // 初始化地图
     HuaweiIO::initMap();
     std::cout << "OK" << std::endl;
@@ -46,7 +60,14 @@ void startGame(){
     std::thread in_stream_thread(inputListener);
     in_stream_thread.detach();
 
-    // 算法输出主进程
+    // 决策树启动
+    std::thread planning_thread(planningListener);
+}
+
+/**
+ * 主进程循环
+ */
+void startGame(){
     while(!reach_end) {
         // 时间戳一致时不处理，时间戳为0时不处理
         if (stamp_record == GameMap::getLatestTimeStamp() || GameMap::getLatestTimeStamp() == 0) {
@@ -54,12 +75,15 @@ void startGame(){
         }
         stamp_record = GameMap::getLatestTimeStamp();
 
-        OutputFrame outputFrame;
-        outputFrame.forward->insert(std::pair<int, double>(1,2.0));
-        //TODO: 主进程，用于添加算法
+        // 初始化一个导航类
+        auto* navigation = new Navigation();
+        OutputFrame outputFrame = navigation->genCommands();;
 
         // 输出结果线程
         std::thread out_stream_thread(HuaweiIO::sendCommand, outputFrame);
         out_stream_thread.detach();
+
+        // 释放导航类
+        delete navigation;
     }
 }

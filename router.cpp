@@ -30,7 +30,7 @@ Router::Router() {
 
     // 初始化机器人信息
     for (int i = 0; i < 4; ++i) {
-        auto *robot_state = new RobotState();
+        auto *robot_state = new RobotState(GameMap::getLatestFrame().robots->at(1).position);
         robot_states->push_back(*robot_state);
     }
 
@@ -39,7 +39,7 @@ Router::Router() {
         auto *row = new std::vector<double>();
         for (int j = 0; j < frame.workshop_count; ++j) {
             if (i == j){
-                row->push_back(INT_MAX);
+                row->push_back(MAXFLOAT);
             }
             double distance;
             Point2D *rowPoint = frame.workshops->at(i).position;
@@ -115,6 +115,16 @@ Router::Router() {
     }
 }
 
+std::vector<WorkshopConstData> &Router::getWorkshopByType(int type) {
+    auto* ones = new std::vector<WorkshopConstData>();
+    for(WorkshopConstData data : *workshop_const_data){
+        if (data.getType() == type){
+            ones->push_back(data);
+        }
+    }
+    return *ones;
+}
+
 std::vector<WorkshopConstData> &Router::getWorkshopConstData() {
     return *workshop_const_data;
 }
@@ -127,15 +137,21 @@ std::vector<std::vector<double>> &Router::getDistanceTable() {
     return *distance_table;
 }
 
-std::vector<int> &Router::getWorkshopBuyFrame() {
+std::vector<int> &Router::getWorkshopBuyTimetable() {
     return *workshop_buy_timetable;
 }
 
-RobotState::RobotState() {
-    this->target = 0;
-    this->operation = 0;
+std::vector<SellTimeTable> &Router::getWorkshopSellTimetable() {
+    return *workshop_sell_timetable;
+}
+
+
+RobotState::RobotState(Point2D *point2D) {
+    this->final_position = point2D;
+    this->target = FREE_STATE;
+    this->operation = FREE_STATE;
     this->is_running = false;
-    this->item_type = 0;
+    this->item_type = FREE_STATE;
 }
 
 int RobotState::getTarget() const{
@@ -165,7 +181,7 @@ bool RobotState::setNewTask(int new_target, int new_operation, int new_item_type
     return true;
 }
 
-void RobotState::setTaskFinished() {
+void RobotState::setTaskFinished(Point2D *point2D) {
     is_running = false;
 }
 

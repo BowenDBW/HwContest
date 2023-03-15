@@ -82,7 +82,8 @@ OutputFrame& Navigation::genCommands(){
             if(Router::getRobotStates().at(i).getOperation() == RobotState::SELL){
                 frame->sell->push_back(i);
             }
-            Router::getRobotStates().at(i).setTaskFinished();
+            Point2D *final_position = GameMap::getLatestFrame().robots->at(i).position;
+            Router::getRobotStates().at(i).setTaskFinished(final_position);
         }
     }
 }

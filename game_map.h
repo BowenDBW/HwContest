@@ -21,6 +21,8 @@ public:
 
     static std::vector<InputFrame>& getMapFrames();
 
+    static InputFrame getLatestFrame();
+
     static InputFrame getFrameBySerial(const int serial);
 
     static InputFrame getFrameBySerial(const int serial, const int search_start_frame);

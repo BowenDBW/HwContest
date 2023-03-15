@@ -45,6 +45,8 @@ public:
  */
 class RobotState {
 private:
+    // 初始化后表示当前坐标，任务完成后表示所在工作台坐标
+    Point2D *final_position;
     // 当前机器人目标工作台, 没有就是 FREE_STATE 0
     int target;
     // 机器人目标操作 0 是 sell，1 是 buy
@@ -55,7 +57,7 @@ private:
     // 若为 false，就可以给机器人下任务
     bool is_running;
 public:
-    RobotState();
+    explicit RobotState(Point2D *point2D);
 
     const static int SELL = 0;
     const static int BUY = 1;
@@ -71,8 +73,9 @@ public:
 
     /**
      * 结束或中止任务
+     * @param point2D 传回最后的位置用于给决策树下一步决策提供数据
      */
-    void setTaskFinished();
+    void setTaskFinished(Point2D *point2D);
     int getTarget() const;
     int getOperation() const;
     int getItemType() const;
@@ -104,11 +107,15 @@ public:
 
     static std::vector<WorkshopConstData>& getWorkshopConstData();
 
+    static std::vector<WorkshopConstData>& getWorkshopByType(int type);
+
     static std::vector<RobotState>& getRobotStates();
 
     static std::vector<std::vector<double>>& getDistanceTable();
 
-    static std::vector<int>& getWorkshopBuyFrame();
+    static std::vector<int>& getWorkshopBuyTimetable();
+
+    static std::vector<SellTimeTable>& getWorkshopSellTimetable();
 };
 
 

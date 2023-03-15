@@ -43,3 +43,7 @@ InputFrame GameMap::getFrameBySerial(const int serial, const int search_start_fr
         return map_frames->at(0);
     }
 }
+
+InputFrame GameMap::getLatestFrame() {
+    return getFrameBySerial(latest_timestamp);
+}
