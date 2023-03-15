@@ -133,6 +133,15 @@ struct OutputFrame {
     std::vector<int> *sell = new std::vector<int>();
     // 该帧销毁操作机器人ID
     std::vector<int> *destroy = new std::vector<int>();
+
+    void insertForward(int index, double speed) const{
+        forward->insert(std::pair<int, double>(index,speed));
+    }
+
+    void insertRotate(int index, double w_speed) const{
+        rotate->insert(std::pair<int, double>(index,w_speed));
+    }
+
 };
 
 #endif //HUAWEICONTEST_DATA_FORM_HPP

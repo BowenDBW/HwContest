@@ -57,6 +57,9 @@ private:
 public:
     RobotState();
 
+    const static int SELL = 0;
+    const static int BUY = 1;
+
     /**
      * 这个函数负责给机器人下达新任务
      * @param new_target 目标工作台

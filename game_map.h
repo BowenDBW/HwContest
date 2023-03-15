@@ -11,9 +11,9 @@
 
 class GameMap {
 private:
-    // 当前帧
+    // 当前时刻的帧序号
     static int latest_timestamp;
-    // 地图中的工作台信息
+    // 从游戏开始到当前时刻所有帧的集合
     static std::vector<InputFrame> *map_frames;
 
 public:

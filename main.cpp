@@ -4,7 +4,6 @@
 
 #include "huawei_io.h"
 #include "game_map.h"
-#include "na"
 #include <thread>
 
 bool reach_end = false;
@@ -53,7 +52,7 @@ void startGame(){
         stamp_record = GameMap::getLatestTimeStamp();
 
         OutputFrame outputFrame;
-        outputFrame.forward->insert(std::pair<int, double>(1,2.0));
+        outputFrame.insertForward(1,2.0);
         //TODO: 主进程，用于添加算法
 
         // 输出结果线程
