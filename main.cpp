@@ -4,6 +4,7 @@
 
 #include "huawei_io.h"
 #include "game_map.h"
+#include "na"
 #include <thread>
 
 bool reach_end = false;

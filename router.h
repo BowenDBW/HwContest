@@ -49,7 +49,7 @@ private:
     int target;
     // 机器人目标操作 0 是 sell，1 是 buy
     int operation;
-    // 机器人携带物品种类，没有携带为 FREE_STATE 0;
+    // 机器人携带物品种类，没有携带为 FREE_STATE 0
     int item_type;
     // 机器人要是已经有任务了就为 true，此时不能给机器人下任务
     // 若为 false，就可以给机器人下任务

@@ -11,10 +11,10 @@ add_executable( HuaweiContest
         data_form.hpp
         huawei_io.h
         huawei_io.cpp
-        Planning.cpp
-        Planning.h
-        Navigation.cpp
-        Navigation.h
+        planning.cpp
+        planning.h
+        navigation.cpp
+        navigation.h
         game_map.cpp
         game_map.h
         router.cpp router.h)
