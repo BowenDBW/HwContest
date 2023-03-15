@@ -4,7 +4,7 @@
 
 #include "huawei_io.h"
 #include "game_map.h"
-#include "na"
+#include "robot_behavior.h"
 #include <thread>
 
 bool reach_end = false;
@@ -22,11 +22,13 @@ int main(){
  */
 [[noreturn]] void inputListener(){
     while (true) {
+        //读取输入帧
         InputFrame frame = HuaweiIO::genFrame();
         // 读到末尾程序结束
         if(frame.timestamp == EOF){
             reach_end = true;
         } else {
+            //更新帧
             GameMap::updateFrame(frame.timestamp, frame);
         }
     }
