@@ -174,14 +174,33 @@ bool RobotState::setNewTask(int new_target, int new_operation, int new_item_type
     if(is_running){
         return false;
     }
+    // 赋值
     target = new_target;
     item_type = new_operation;
     operation = new_item_type;
+    // TODO：更新时刻表
+    if(operation == SELL){
+
+    } else if (operation == BUY){
+
+    } else{
+        throw std::invalid_argument(&"operation in function setNewTask received:" [ operation]);
+    }
+    // 改变状态
     is_running = true;
     return true;
 }
 
 void RobotState::setTaskFinished(Point2D *point2D) {
+    // TODO：更新时刻表
+    if(operation == SELL){
+
+    } else if (operation == BUY){
+
+    } else{
+        throw std::invalid_argument(&"operation in function setTaskFinished received:" [ operation]);
+    }
+    // 改变状态
     is_running = false;
 }
 

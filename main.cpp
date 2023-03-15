@@ -18,6 +18,11 @@ void initThreads();
 void startGame();
 
 int main(){
+    // 初始化地图
+    HuaweiIO::initMap();
+    std::cout << "OK" << std::endl;
+
+    // 进入比赛
     initThreads();
     startGame();
 }
@@ -40,10 +45,10 @@ int main(){
 }
 
 /**
- * 决策树模型
+ * 工厂模式，这里选择决策模型
  */
  void planningListener(){
-     // 工厂模式：这个地方决定你用什么决策模型
+     // 这个地方决定你用什么决策模型
      Planning *planning = new SimplePlanning();
      planning->planningLoop();
  }
@@ -52,16 +57,16 @@ int main(){
  * 初始化函数
  */
 void initThreads(){
-    // 初始化地图
-    HuaweiIO::initMap();
-    std::cout << "OK" << std::endl;
-
     // 输入监听器
     std::thread in_stream_thread(inputListener);
     in_stream_thread.detach();
 
+    // 初始化路由表
+    new Router();
+
     // 决策树启动
     std::thread planning_thread(planningListener);
+    planning_thread.detach();
 }
 
 /**
@@ -79,7 +84,7 @@ void startGame(){
         auto* navigation = new Navigation();
         OutputFrame outputFrame = navigation->genCommands();;
 
-        // 输出结果线程
+        // 单独开一个线程输出结果
         std::thread out_stream_thread(HuaweiIO::sendCommand, outputFrame);
         out_stream_thread.detach();
 
