@@ -7,8 +7,8 @@
 std::vector<std::vector<double>> *Router::distance_table = new std::vector<std::vector<double>>();
 std::vector<WorkshopConstData> *Router::workshop_const_data = new std::vector<WorkshopConstData>();
 std::vector<RobotState> *Router::robot_states = new std::vector<RobotState>();
-std::vector<int> *workshop_buy_frame = new std::vector<int>();
-std::map<int, int> *workshop_sell_frame = new std::map<int, int>();
+std::vector<int> *Router::workshop_buy_timetable = new std::vector<int>();
+std::vector<SellTimeTable> *Router::workshop_sell_timetable = new std::vector<SellTimeTable>();
 
 Router::Router() {
     // 获取第一帧
@@ -53,16 +53,82 @@ Router::Router() {
 
     // 初始化购买时刻表
     for (int i = 0; i < frame.workshop_count; ++i) {
-        workshop_buy_frame->push_back(-1);
+        workshop_buy_timetable->push_back(UNLOCK);
     }
 
     // 初始化销售时刻表
     for (int i = 0; i < frame.workshop_count; ++i) {
         int type = workshop_const_data->at(i).getType();
-        if(type == 3){
-
+        if(type == 4){
+            SellTimeTable table1{};
+            table1.material_type = 1;
+            table1.index = i;
+            table1.arrival_frame = UNLOCK;
+            workshop_sell_timetable->push_back(table1);
+            SellTimeTable table2{};
+            table2.material_type = 2;
+            table2.index = i;
+            table2.arrival_frame = UNLOCK;
+            workshop_sell_timetable->push_back(table2);
+        }
+        if(type == 5){
+            SellTimeTable table1{};
+            table1.material_type = 1;
+            table1.index = i;
+            table1.arrival_frame = UNLOCK;
+            workshop_sell_timetable->push_back(table1);
+            SellTimeTable table2{};
+            table2.material_type = 3;
+            table2.index = i;
+            table2.arrival_frame = UNLOCK;
+            workshop_sell_timetable->push_back(table2);
+        }
+        if(type == 6){
+            SellTimeTable table1{};
+            table1.material_type = 2;
+            table1.index = i;
+            table1.arrival_frame = UNLOCK;
+            workshop_sell_timetable->push_back(table1);
+            SellTimeTable table2{};
+            table2.material_type = 3;
+            table2.index = i;
+            table2.arrival_frame = UNLOCK;
+            workshop_sell_timetable->push_back(table2);
+        }
+        if(type == 7) {
+            SellTimeTable table1{};
+            table1.material_type = 4;
+            table1.index = i;
+            table1.arrival_frame = UNLOCK;
+            workshop_sell_timetable->push_back(table1);
+            SellTimeTable table2{};
+            table2.material_type = 5;
+            table2.index = i;
+            table2.arrival_frame = UNLOCK;
+            workshop_sell_timetable->push_back(table2);
+            SellTimeTable table3{};
+            table3.material_type = 6;
+            table3.index = i;
+            table3.arrival_frame = UNLOCK;
+            workshop_sell_timetable->push_back(table3);
         }
     }
+}
+
+std::vector<WorkshopConstData> &Router::getWorkshopConstData() {
+    return *workshop_const_data;
+}
+
+std::vector<RobotState> &Router::getRobotStates() {
+    return *robot_states;
+}
+
+std::vector<std::vector<double>> &Router::getDistanceTable() {
+    return *distance_table;
+}
+
+std::vector<int> &Router::getWorkshopBuyFrame() {
+    return *workshop_buy_timetable;
 }
 
 RobotState::RobotState() {
@@ -72,31 +138,31 @@ RobotState::RobotState() {
     this->item_type = 0;
 }
 
-int RobotState::getTarget(){
+int RobotState::getTarget() const{
     return target;
 }
 
-int RobotState::getOperation(){
+int RobotState::getOperation() const{
     return operation;
 }
 
-int RobotState::getItemType(){
+int RobotState::getItemType() const{
     return item_type;
 }
 
-bool RobotState::getIsRunning(){
+bool RobotState::getIsRunning() const{
     return is_running;
 }
 
 bool RobotState::setNewTask(int new_target, int new_operation, int new_item_type) {
     if(is_running){
         return false;
-    } else {
-        target = new_target;
-        item_type = new_operation;
-        operation = new_item_type;
-        is_running = true;
     }
+    target = new_target;
+    item_type = new_operation;
+    operation = new_item_type;
+    is_running = true;
+    return true;
 }
 
 void RobotState::setTaskFinished() {
@@ -107,7 +173,7 @@ Point2D& WorkshopConstData::getPosition() {
     return *point;
 }
 
-int WorkshopConstData::getType() {
+int WorkshopConstData::getType() const {
     return type;
 }
 
