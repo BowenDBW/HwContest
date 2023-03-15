@@ -4,6 +4,7 @@
 
 #include "huawei_io.h"
 #include "game_map.h"
+#include "robot_behavior.h"
 #include <thread>
 
 bool reach_end = false;
@@ -21,11 +22,13 @@ int main(){
  */
 [[noreturn]] void inputListener(){
     while (true) {
+        //读取输入帧
         InputFrame frame = HuaweiIO::genFrame();
         // 读到末尾程序结束
         if(frame.timestamp == EOF){
             reach_end = true;
         } else {
+            //更新帧
             GameMap::updateFrame(frame.timestamp, frame);
         }
     }
@@ -52,7 +55,7 @@ void startGame(){
         stamp_record = GameMap::getLatestTimeStamp();
 
         OutputFrame outputFrame;
-        outputFrame.insertForward(1,2.0);
+        outputFrame.forward->insert(std::pair<int, double>(1,2.0));
         //TODO: 主进程，用于添加算法
 
         // 输出结果线程

@@ -39,7 +39,7 @@ Router::Router() {
         auto *row = new std::vector<double>();
         for (int j = 0; j < frame.workshop_count; ++j) {
             if (i == j){
-                row->push_back(MAXFLOAT);
+                row->push_back(INT_MAX);
             }
             double distance;
             Point2D *rowPoint = frame.workshops->at(i).position;
