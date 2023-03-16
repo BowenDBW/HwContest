@@ -11,6 +11,7 @@
 #include <cmath>
 
 #define UNLOCK (-1)
+#define NOT_REACHABLE (-1)
 #define FREE_STATE 0
 
 /**
