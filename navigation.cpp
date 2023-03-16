@@ -86,4 +86,6 @@ OutputFrame& Navigation::genCommands() {
             Router::getRobotStates().at(i).setTaskFinished(final_position);
         }
     }
+
+    return *frame;
 }

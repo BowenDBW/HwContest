@@ -21,28 +21,14 @@ void GameMap::updateFrame(const int new_timestamp, const InputFrame& map_frame){
 }
 
 InputFrame GameMap::getFrameBySerial(const int serial) {
-    return getFrameBySerial(serial, serial);
+    while (true){
+        if (serial < map_frames->size()){
+            break;
+        }
+    }
+    return map_frames->at(serial);
 }
 
-InputFrame GameMap::getFrameBySerial(const int serial, const int search_start_frame) {
-    InputFrame frame = map_frames->at(search_start_frame);
-    if(frame.timestamp == serial){
-        return frame;
-    } else {
-        for (int i = 0; i < 3; ++i) {
-            frame = map_frames->at(search_start_frame - i);
-            if(frame.timestamp == serial) {
-                return frame;
-            }
-            frame = map_frames->at(search_start_frame + i);
-            if(frame.timestamp == serial) {
-                return frame;
-            }
-        }
-        std::cout << "game over";
-        return map_frames->at(0);
-    }
-}
 
 InputFrame GameMap::getLatestFrame() {
     return getFrameBySerial(latest_timestamp);

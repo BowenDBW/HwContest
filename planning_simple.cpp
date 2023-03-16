@@ -14,7 +14,7 @@
             }else if(state.getItemType() == FREE_STATE){
                 int best_target = FREE_STATE;
                 double nearest_distance = UNLOCK;
-                for(int j = 0; j < Router::getWorkshopCount(); ++j){
+                for(int j = 0; j < datas.size(); ++j){
                     if(datas[j].getType() > 7 || Router::getWorkshopBuyTimetable()[i] != UNLOCK){
                         continue;
                     } else {
@@ -57,7 +57,7 @@
 
                 int best_target = FREE_STATE;
                 double nearest_distance = UNLOCK;
-                for(int j = 0; j < Router::getWorkshopCount(); ++j){
+                for(int j = 0; j < datas.size(); ++j){
                     if(datas[j].getType() != 9){
                         continue;
                     } else {
