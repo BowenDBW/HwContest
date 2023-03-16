@@ -16,8 +16,8 @@ std::vector<InputFrame>& GameMap::getMapFrames(){
 }
 
 void GameMap::updateFrame(const int new_timestamp, const InputFrame& map_frame){
-    latest_timestamp = new_timestamp;
     map_frames->push_back(map_frame);
+    latest_timestamp = new_timestamp;
 }
 
 InputFrame GameMap::getFrameBySerial(const int serial) {

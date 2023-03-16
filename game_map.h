@@ -23,9 +23,7 @@ public:
 
     static InputFrame getLatestFrame();
 
-    static InputFrame getFrameBySerial(const int serial);
-
-    static InputFrame getFrameBySerial(const int serial, const int search_start_frame);
+    static InputFrame getFrameBySerial(int serial);
 
     static void updateFrame(int new_timestamp, const InputFrame& map_frame);
 };
