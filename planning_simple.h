@@ -8,6 +8,8 @@
 #include "planning.h"
 #include "router.h"
 
+#include <cmath>
+
 class SimplePlanning : public Planning{
 public:
     [[noreturn]]void planningLoop() override;

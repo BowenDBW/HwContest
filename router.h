@@ -79,6 +79,7 @@ public:
     int getTarget() const;
     int getOperation() const;
     int getItemType() const;
+    Point2D& getFinalPosition() const;
     bool getIsRunning() const;
 };
 

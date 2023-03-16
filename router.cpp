@@ -9,6 +9,7 @@ std::vector<WorkshopConstData> *Router::workshop_const_data = new std::vector<Wo
 std::vector<RobotState> *Router::robot_states = new std::vector<RobotState>();
 std::vector<int> *Router::workshop_buy_timetable = new std::vector<int>();
 std::vector<SellTimeTable> *Router::workshop_sell_timetable = new std::vector<SellTimeTable>();
+int Router::workshop_count = FREE_STATE;
 
 Router::Router() {
     // 获取第一帧
@@ -18,9 +19,8 @@ Router::Router() {
         }
     }
     InputFrame frame = GameMap::getFrameBySerial(1);
-
-    // 初始化工作台信息
     workshop_count = frame.workshop_count;
+    // 初始化工作台信息
     for (int i = 0; i < workshop_count; ++i) {
         auto *const_data =
                 new WorkshopConstData(frame.workshops->at(i).position,
@@ -238,6 +238,10 @@ void RobotState::setTaskFinished(Point2D *point2D) {
     }
     // 改变状态
     is_running = false;
+}
+
+Point2D &RobotState::getFinalPosition() const {
+    return *final_position;
 }
 
 Point2D& WorkshopConstData::getPosition() {
