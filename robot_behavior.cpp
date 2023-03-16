@@ -4,36 +4,45 @@
 #include <iostream>
 #include "robot_behavior.h"
 
+BehaviorTree::BehaviorTree(const std::string &name) : name(name), children()  {
 
-// 行为树的动作节点类，继承自基类，并实现了一个简单的打印动作
-class ActionNode : public BehaviorTree {
-public:
-    // 构造函数，调用基类构造函数并传入名称参数
-    ActionNode(const std::string& name) : BehaviorTree(name) {}
+}
 
-    // 执行打印动作，并返回成功状态
-    Status tick() override {
-        std::cout << name << " is running." << std::endl;
-        return Status::Success;
-    }
-};
+/*
+ * CompositeNode构造函数
+ */
+CompositeNode::CompositeNode(const std::string &name) : BehaviorTree(name) {
 
-// 行为树的条件节点类，继承自基类，并实现了一个简单的判断条件
-class ConditionNode : public BehaviorTree {
-public:
-    // 构造函数，调用基类构造函数并传入名称参数和判断条件参数
-    ConditionNode(const std::string& name, bool condition) : BehaviorTree(name), condition(condition) {}
+}
 
-    // 根据判断条件返回成功或失败状态
-    Status tick() override {
-        if (condition) {
-            return Status::Success;
-        } else {
-            return Status::Failure;
-        }
-    }
+//添加子节点
+void CompositeNode::addChild(BehaviorTree *child) {
+    children.push_back(child);
+}
 
-private:
-    bool condition; // 判断条件的值
-};
+// 获取子节点列表的大小（即数量）
+int CompositeNode::getChildCount() const {
+    return children.size();
+}
 
+
+// 构造函数，调用基类构造函数并传入名称参数，默认设置当前索引为 0
+SelectorNode::SelectorNode(const std::string& name) : CompositeNode(name), current(0) {
+
+}
+
+// 构造函数，调用基类构造函数并传入名称参数，默认设置当前索引为 0
+SequenceNode::SequenceNode(const std::string& name) : CompositeNode(name), current(0) {
+
+}
+
+
+// 构造函数，调用基类构造函数并传入名称参数
+ActionNode::ActionNode(const std::string& name) : BehaviorTree(name) {
+
+}
+
+// 构造函数，调用基类构造函数并传入名称参数和判断条件参数
+ConditionNode::ConditionNode(const std::string& name, bool condition) : BehaviorTree(name), condition(condition) {
+
+}
