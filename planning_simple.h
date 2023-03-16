@@ -6,6 +6,7 @@
 #define HUAWEICONTEST_PLANNING_SIMPLE_H
 
 #include "planning.h"
+#include "router.h"
 
 class SimplePlanning : public Planning{
 public:

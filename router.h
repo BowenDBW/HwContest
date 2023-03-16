@@ -66,10 +66,9 @@ public:
      * 这个函数负责给机器人下达新任务
      * @param new_target 目标工作台
      * @param new_operation 到达工作台的工作
-     * @param new_item_type 携带物品种类
      * @return 是否下达成功
      */
-    bool setNewTask(int new_target, int new_operation, int new_item_type);
+    bool setNewTask(int new_target, int new_operation);
 
     /**
      * 结束或中止任务
@@ -88,6 +87,7 @@ public:
  */
 class Router {
 private:
+    static int workshop_count;
     // 工作台位置，索引和种类信息
     static std::vector<WorkshopConstData> *workshop_const_data;
     // 机器人当前任务信息
@@ -116,6 +116,12 @@ public:
     static std::vector<int>& getWorkshopBuyTimetable();
 
     static std::vector<SellTimeTable>& getWorkshopSellTimetable();
+
+    static SellTimeTable getSellTimeTableByIndexAndMaterial(int index, int material_type);
+
+    static bool updateSellTimeTable(int index, int material_type, int arrival_frame);
+
+    static int getWorkshopCount();
 };
 
 
