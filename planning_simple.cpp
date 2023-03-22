@@ -9,9 +9,10 @@
         for (int i = 0; i < 4; ++i) {
             RobotState state = Router::getRobotStates().at(i);
             std::vector<WorkshopConstData> datas = Router::getWorkshopConstData();
-            if(state.getIsRunning()){
+            if(Router::getRobotStates().at(i).getIsRunning()){
                 continue;
             }else if(state.getItemType() == FREE_STATE){
+
                 int best_target = FREE_STATE;
                 double nearest_distance = UNLOCK;
                 for(int j = 0; j < datas.size(); ++j){
@@ -33,6 +34,7 @@
                                 }
                             }
                         } else {
+
                             double distance = Router::getDistanceTable()[state.getTarget()][j];
                             if (distance == NOT_REACHABLE){
                                 continue;
@@ -50,7 +52,6 @@
                         }
                     }
                 }
-                std::cout << "分配了购买任务" << std::endl;
                 state.setNewTask(best_target, RobotState::BUY);
 
             }else{
@@ -94,7 +95,6 @@
                     }
                 }
 
-                std::cout << "分配了销售任务" << std::endl;
                 state.setNewTask(best_target, RobotState::SELL);
             }
         }

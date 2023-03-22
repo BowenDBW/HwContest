@@ -80,7 +80,7 @@ public:
     int getOperation() const;
     int getItemType() const;
     Point2D& getFinalPosition() const;
-    bool getIsRunning() const;
+    bool getIsRunning();
 };
 
 /**

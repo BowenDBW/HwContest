@@ -194,7 +194,7 @@ int RobotState::getItemType() const{
     return item_type;
 }
 
-bool RobotState::getIsRunning() const{
+bool RobotState::getIsRunning() {
     return is_running;
 }
 
@@ -223,11 +223,12 @@ bool RobotState::setNewTask(int new_target, int new_operation) {
     // 赋值
     operation = new_operation;
     target = new_target;
-    is_running = true;
+    this->is_running = true;
     return true;
 }
 
 void RobotState::setTaskFinished(Point2D *point2D) {
+    std::cout << "called" << std::endl;
     // 更新时刻表
     if(operation == SELL){
         item_type = FREE_STATE;
