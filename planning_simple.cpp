@@ -50,7 +50,7 @@
                         }
                     }
                 }
-
+                std::cout << "分配了购买任务" << std::endl;
                 state.setNewTask(best_target, RobotState::BUY);
 
             }else{
@@ -94,6 +94,7 @@
                     }
                 }
 
+                std::cout << "分配了销售任务" << std::endl;
                 state.setNewTask(best_target, RobotState::SELL);
             }
         }
