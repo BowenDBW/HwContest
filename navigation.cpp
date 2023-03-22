@@ -15,6 +15,7 @@ Navigation::Navigation() {
 }
 
 OutputFrame& Navigation::genCommands() {
+
     auto *frame = new OutputFrame();
     for (int i = 0; i < 4; ++i) {
         // 如果机器人没有被分配任务，就直接跳到下一个机器人

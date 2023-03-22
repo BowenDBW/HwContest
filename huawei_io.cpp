@@ -104,7 +104,6 @@ InputFrame& HuaweiIO::genFrame() {
 }
 
 void HuaweiIO::sendCommand(const OutputFrame& frame) {
-    std::cout << GameMap::getLatestTimeStamp() << std::endl;
     for(auto &pair : *frame.forward) {
         std::cout << "forward " << pair.first << " " << pair.second << std::endl;
     }
@@ -133,6 +132,7 @@ bool HuaweiIO::initMap() {
     while (fgets(line, sizeof line, stdin)) {
         // 读到 OK 返回
         if (line[0] == 'O' && line[1] == 'K') {
+            GameMap::updateFrame(0, *first_frame);
             return true;
         }
         // 读到工作台信息保存记录

@@ -18,8 +18,10 @@ Router::Router() {
             break;
         }
     }
+
     InputFrame frame = GameMap::getFrameBySerial(1);
     workshop_count = frame.workshop_count;
+
     // 初始化工作台信息
     for (int i = 0; i < workshop_count; ++i) {
         auto *const_data =
