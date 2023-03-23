@@ -81,6 +81,7 @@ public:
     int getItemType() const;
     Point2D& getFinalPosition() const;
     bool getIsRunning() const;
+    void setIsRunning(bool isRunning);
 };
 
 /**

@@ -84,6 +84,7 @@ OutputFrame& Navigation::genCommands() {
                 frame->sell->push_back(i);
             }
             Point2D *final_position = GameMap::getLatestFrame().robots->at(i).position;
+            std::cout << "setTaskFinished" << std::endl;
             Router::getRobotStates().at(i).setTaskFinished(final_position);
         }
     }

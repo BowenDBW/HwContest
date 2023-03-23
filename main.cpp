@@ -48,7 +48,6 @@ int main(){
  * 工厂模式，这里选择决策模型
  */
  void planningListener(){
-    std::cout << "决策树启动" << std::endl;
      // 这个地方决定你用什么决策模型
      Planning *planning = new SimplePlanning();
      planning->planningLoop();

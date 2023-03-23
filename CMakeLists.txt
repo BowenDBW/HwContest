@@ -4,7 +4,7 @@ project(HuaweiContest)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "/home/bowen/LinuxRelease")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "C:\\Users\\chenhong\\Desktop\\WindowsRelease\\WindowsRelease\\Demo")
 
 add_executable( HuaweiContest
         main.cpp
@@ -17,8 +17,11 @@ add_executable( HuaweiContest
         navigation.h
         game_map.cpp
         game_map.h
-        router.cpp router.h robot_behavior.h robot_behavior.cpp planning_simple.cpp planning_simple.h planning_behaviortree.h)
-
-TARGET_LINK_LIBRARIES( HuaweiContest
-        pthread
+        router.cpp
+        router.h
+        robot_behavior.h
+        robot_behavior.cpp
+        planning_simple.cpp
+        planning_simple.h
+        planning_behaviortree.h
         )

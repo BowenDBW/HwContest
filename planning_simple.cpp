@@ -7,19 +7,18 @@
 [[noreturn]]void SimplePlanning::planningLoop() {
     while(true){
         for (int i = 0; i < 4; ++i) {
-            RobotState state = Router::getRobotStates().at(i);
             std::vector<WorkshopConstData> datas = Router::getWorkshopConstData();
-            if(state.getIsRunning()){
+            if(Router::getRobotStates().at(i).getIsRunning()){
                 continue;
-            }else if(state.getItemType() == FREE_STATE){
+            }else if(Router::getRobotStates().at(i).getItemType() == FREE_STATE){
                 int best_target = FREE_STATE;
                 double nearest_distance = UNLOCK;
                 for(int j = 0; j < datas.size(); ++j){
                     if(datas[j].getType() > 7 || Router::getWorkshopBuyTimetable()[i] != UNLOCK){
                         continue;
                     } else {
-                        if(state.getTarget() == FREE_STATE){
-                            Point2D robot_final =state.getFinalPosition();
+                        if(Router::getRobotStates().at(i).getTarget() == FREE_STATE){
+                            Point2D robot_final =Router::getRobotStates().at(i).getFinalPosition();
                             Point2D target_pos = datas[j].getPosition();
                             double distance = sqrt(pow(robot_final.x - target_pos.x, 2)
                                     + pow(robot_final.y - target_pos.y, 2));
@@ -33,7 +32,7 @@
                                 }
                             }
                         } else {
-                            double distance = Router::getDistanceTable()[state.getTarget()][j];
+                            double distance = Router::getDistanceTable()[Router::getRobotStates().at(i).getTarget()][j];
                             if (distance == NOT_REACHABLE){
                                 continue;
                             } else {
@@ -50,8 +49,8 @@
                         }
                     }
                 }
-                std::cout << "分配了购买任务" << std::endl;
-                state.setNewTask(best_target, RobotState::BUY);
+                Router::getRobotStates().at(i).setNewTask(best_target, RobotState::BUY);
+                //is_running = false;
 
             }else{
 
@@ -61,8 +60,8 @@
                     if(datas[j].getType() != 9){
                         continue;
                     } else {
-                        if(state.getTarget() == FREE_STATE){
-                            Point2D robot_final =state.getFinalPosition();
+                        if(Router::getRobotStates().at(i).getTarget() == FREE_STATE){
+                            Point2D robot_final =Router::getRobotStates().at(i).getFinalPosition();
                             Point2D target_pos = datas[j].getPosition();
                             double distance = sqrt(pow(robot_final.x - target_pos.x, 2)
                                                    + pow(robot_final.y - target_pos.y, 2));
@@ -76,7 +75,7 @@
                                 }
                             }
                         } else {
-                            double distance = Router::getDistanceTable()[state.getTarget()][j];
+                            double distance = Router::getDistanceTable()[Router::getRobotStates().at(i).getTarget()][j];
                             if (distance == NOT_REACHABLE){
                                 continue;
                             } else {
@@ -95,7 +94,7 @@
                 }
 
                 std::cout << "分配了销售任务" << std::endl;
-                state.setNewTask(best_target, RobotState::SELL);
+                Router::getRobotStates().at(i).setNewTask(best_target, RobotState::SELL);
             }
         }
     }

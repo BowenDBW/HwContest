@@ -198,7 +198,12 @@ bool RobotState::getIsRunning() const{
     return is_running;
 }
 
+void RobotState::setIsRunning(bool isRunning) {
+    this->is_running = isRunning;
+}
+
 bool RobotState::setNewTask(int new_target, int new_operation) {
+    //正在运行返回false,无需设置任务
     if(is_running){
         return false;
     }
@@ -223,7 +228,7 @@ bool RobotState::setNewTask(int new_target, int new_operation) {
     // 赋值
     operation = new_operation;
     target = new_target;
-    is_running = true;
+    setIsRunning(true);
     return true;
 }
 
@@ -239,6 +244,7 @@ void RobotState::setTaskFinished(Point2D *point2D) {
         throw std::invalid_argument(&"operation in function setTaskFinished received:" [ operation]);
     }
     // 改变状态
+    std::cout << "setTaskFinished........................" << std::endl;
     is_running = false;
 }
 
